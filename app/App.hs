@@ -1,34 +1,19 @@
-{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE TypeOperators #-}
-{-# LANGUAGE DeriveGeneric #-}
 
 module App (app) where
 
+import Database.SQLite.Simple
 import Network.Wai
 import Servant
-import GHC.Generics (Generic)
-import Data.Aeson.Types
+import Models
+import DB
+import Control.Monad.IO.Class
 
 type AppAPI = "solves" :> Get '[JSON] [Solve]
 
-data Solve = Solve {
-    scramble :: String
-} deriving (Generic)
+app :: Connection -> Application
+app conn = serve (Proxy :: Proxy AppAPI) (appServer conn)
 
-instance ToJSON Solve
-
-app :: Application
-app = serve appAPI appServer
-
-appAPI :: Proxy AppAPI
-appAPI = Proxy
-
-appServer :: Server AppAPI
-appServer = return solves
-
-solves :: [Solve]
-solves = 
-    [ Solve "TEST SCRAMBLE"
-    , Solve "TEST SCRAMBLE"
-    ]
+appServer :: Connection -> Server AppAPI
+appServer conn = liftIO (getAllSolves conn)

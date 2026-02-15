@@ -7,6 +7,8 @@ import App
 
 main :: IO ()
 main = do
-    db <- initConn
-    run 4000 app
-    close db
+    let port = 4000
+    conn <- initConn
+    putStrLn ("Starting at port " ++ show port)
+    run port (app conn)
+    close conn
