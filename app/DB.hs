@@ -11,7 +11,7 @@ initConn = do
     mapM_ (execute_ conn) initQueries
     return conn
 
-getAllScrambles :: Connection -> IO [Scramble]
+getAllScrambles :: Connection -> IO [GetScrambleResponse]
 getAllScrambles conn = query_ conn "SELECT * FROM scrambles"
 
 initQueries :: [Query]
