@@ -1,9 +1,9 @@
 module Main where
 
-import Database.SQLite.Simple
 import Network.Wai.Handler.Warp 
-import DB
 import App
+import DB
+import Database.SQLite.Simple
 
 main :: IO ()
 main = do

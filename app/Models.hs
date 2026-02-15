@@ -1,17 +1,19 @@
 {-# LANGUAGE DeriveGeneric #-}
 
-module Models (Solve(..)) where
+module Models (Scramble(..)) where
 
 import GHC.Generics (Generic)
 import Data.Aeson.Types
 import Database.SQLite.Simple.FromRow
 
-data Solve = Solve {
-    sovleId :: Int,
-    scramble :: String
+data Scramble = Scramble {
+    scramble_id :: Int,
+    scramble :: String,
+    created_by :: String,
+    created_at :: String
 } deriving (Generic)
 
-instance ToJSON Solve
+instance ToJSON Scramble
 
-instance FromRow Solve where
-    fromRow = Solve <$> field <*> field
+instance FromRow Scramble where
+    fromRow = Scramble <$> field <*> field <*> field <*> field

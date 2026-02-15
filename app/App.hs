@@ -10,10 +10,10 @@ import Models
 import DB
 import Control.Monad.IO.Class
 
-type AppAPI = "solves" :> Get '[JSON] [Solve]
+type AppAPI = "scrambles" :> Get '[JSON] [Scramble]
 
 app :: Connection -> Application
 app conn = serve (Proxy :: Proxy AppAPI) (appServer conn)
 
 appServer :: Connection -> Server AppAPI
-appServer conn = liftIO (getAllSolves conn)
+appServer conn = liftIO (getAllScrambles conn)
